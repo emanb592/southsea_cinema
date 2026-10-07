@@ -11,7 +11,7 @@ class MovieListing extends StatefulWidget {
 
 class _MovieListingState extends State<MovieListing> {
   int _selectedTickets = 0;
-  String? _orderMessage;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +24,17 @@ class _MovieListingState extends State<MovieListing> {
       ),
       drawer: const NavDrawer(),
       body: Container(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(16.0),
+        color: cinemaBackground,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'DRACULA (1931) (PG)',
-              style: TextStyle(fontSize: 26, color: cinemaFontWhite),
+              'THE ROCKY HORROR PICTURE SHOW (1975) (12A)',
+              style: const TextStyle(
+                color: cinemaFontWhite,
+                fontSize: 32,
+              ),
             ),
             SizedBox(height: 52),
             Text(
