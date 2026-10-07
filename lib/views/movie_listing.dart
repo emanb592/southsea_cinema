@@ -56,59 +56,60 @@ class _MovieListingState extends State<MovieListing> {
               'Select Quantities (Up to 10 in total)',
               style: const TextStyle(color: cinemaFontWhite, fontSize: 20),
             ),
-            SizedBox(height: 60),
-            Text(
+            const SizedBox(height: 56),
+            const Text(
               'Tickets',
               style: TextStyle(
+                color: cinemaFontWhite,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: cinemaFontWhite,
               ),
             ),
-            SizedBox(height: 18),
+            const SizedBox(height: 16),
             Row(
               children: [
-                DropdownMenu<int>(
-                  initialSelection: 0,
+                Container(
                   width: 150,
-                  onSelected: (value) {
-                    setState(() {
-                      _selectedTickets = value ?? 0;
-                    });
-                  },
-                  dropdownMenuEntries: [
-                    DropdownMenuEntry(value: 0, label: '0'),
-                    DropdownMenuEntry(value: 1, label: '1'),
-                    DropdownMenuEntry(value: 2, label: '2'),
-                    DropdownMenuEntry(value: 3, label: '3'),
-                    DropdownMenuEntry(value: 4, label: '4'),
-                    DropdownMenuEntry(value: 5, label: '5'),
-                  ],
+                  color: cinemaFontWhite,
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<int>(
+                      value: ticketQuantity,
+                      isExpanded: true,
+                      dropdownColor: cinemaFontWhite,
+                      iconEnabledColor: Colors.black,
+                      style: const TextStyle(color: Colors.black, fontSize: 18),
+                      items: List.generate(
+                        6,
+                        (quantity) => DropdownMenuItem(
+                          value: quantity,
+                          child: Text('$quantity'),
+                        ),
+                      ),
+                      onChanged: (quantity) {
+                        if (quantity != null) {
+                          setState(() => ticketQuantity = quantity);
+                        }
+                      },
+                    ),
+                  ),
                 ),
-                SizedBox(width: 16),
-                Text(
-                  'Adult (£7.50)',
-                  style: TextStyle(fontSize: 20, color: cinemaFontWhite),
+                const SizedBox(width: 16),
+                const Text(
+                  'Adult (£20)',
+                  style: TextStyle(color: cinemaFontWhite, fontSize: 20),
                 ),
               ],
             ),
-            SizedBox(height: 44),
+            const SizedBox(height: 32),
             ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _orderMessage = _selectedTickets == 0
-                      ? 'Please select at least one ticket.'
-                      : '$_selectedTickets ticket${_selectedTickets == 1 ? '' : 's'} added to the order.';
-                });
-              },
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: cinemaBrand,
+                foregroundColor: cinemaFontWhite,
+              ),
               child: const Text('ADD TO ORDER'),
             ),
-            SizedBox(height: 16),
-            if (_orderMessage != null)
-              Text(
-                _orderMessage!,
-                style: TextStyle(fontSize: 18, color: cinemaFontWhite),
-              ),
           ],
         ),
       ),
