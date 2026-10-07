@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
 
-class MovieListing extends StatelessWidget {
+class MovieListing extends StatefulWidget {
   const MovieListing({super.key});
+
+  @override
+  State<MovieListing> createState() => _MovieListingState();
+}
+
+class _MovieListingState extends State<MovieListing> {
+  int _selectedTickets = 0;
+  String? _orderMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +25,7 @@ class MovieListing extends StatelessWidget {
       drawer: const NavDrawer(),
       body: Container(
         padding: const EdgeInsets.all(24),
-        child: const Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
@@ -59,6 +67,11 @@ class MovieListing extends StatelessWidget {
                 DropdownMenu<int>(
                   initialSelection: 0,
                   width: 150,
+                  onSelected: (value) {
+                    setState(() {
+                      _selectedTickets = value ?? 0;
+                    });
+                  },
                   dropdownMenuEntries: [
                     DropdownMenuEntry(value: 0, label: '0'),
                     DropdownMenuEntry(value: 1, label: '1'),
@@ -77,9 +90,21 @@ class MovieListing extends StatelessWidget {
             ),
             SizedBox(height: 44),
             ElevatedButton(
-              onPressed: null,
-              child: Text('ADD TO ORDER'),
+              onPressed: () {
+                setState(() {
+                  _orderMessage = _selectedTickets == 0
+                      ? 'Please select at least one ticket.'
+                      : '$_selectedTickets ticket${_selectedTickets == 1 ? '' : 's'} added to the order.';
+                });
+              },
+              child: const Text('ADD TO ORDER'),
             ),
+            SizedBox(height: 16),
+            if (_orderMessage != null)
+              Text(
+                _orderMessage!,
+                style: TextStyle(fontSize: 18, color: cinemaFontWhite),
+              ),
           ],
         ),
       ),
