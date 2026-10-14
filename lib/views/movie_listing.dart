@@ -10,7 +10,8 @@ class MovieListing extends StatefulWidget {
 }
 
 class _MovieListingState extends State<MovieListing> {
-  int ticketQuantity = 0;
+  int _ticketQuantity = 0;
+  String _bookingMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,7 @@ class _MovieListingState extends State<MovieListing> {
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<int>(
-                      value: ticketQuantity,
+                      value: _ticketQuantity,
                       isExpanded: true,
                       dropdownColor: cinemaFontWhite,
                       iconEnabledColor: Colors.black,
@@ -87,7 +88,7 @@ class _MovieListingState extends State<MovieListing> {
                       ),
                       onChanged: (quantity) {
                         if (quantity != null) {
-                          setState(() => ticketQuantity = quantity);
+                          setState(() => _ticketQuantity = quantity);
                         }
                       },
                     ),
@@ -102,13 +103,20 @@ class _MovieListingState extends State<MovieListing> {
             ),
             const SizedBox(height: 32),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  _bookingMessage =
+                      'Added $_ticketQuantity tickets to the order';
+                });
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: cinemaBrand,
                 foregroundColor: cinemaFontWhite,
               ),
               child: const Text('ADD TO ORDER'),
             ),
+            const SizedBox(height: 16),
+            Text(_bookingMessage),
           ],
         ),
       ),
